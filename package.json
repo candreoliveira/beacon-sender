@@ -4,7 +4,9 @@
   "description": "Send beacon made simple. Send XHR, performance and business metrics!",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "webpack": "webpack && webpack --config webpack.config.min.js",
+    "preversion": "npm run webpack"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,13 @@
   },
   "homepage": "https://github.com/candreoliveira/beacon-sender#readme",
   "dependencies": {
-    "xhr-events": "0.0.10"
+    "xhr-events": ">=0.0.10"
+  },
+  "devDependencies": {
+    "babel-core": "^6.0.18",
+    "babel-loader": "^6.0.1",
+    "babel-preset-es2015": "^6.0.15",
+    "uglify-loader": "^1.2.0",
+    "webpack": "^1.12.2"
   }
 }
