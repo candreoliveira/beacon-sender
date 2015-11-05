@@ -1,0 +1,32 @@
+{
+  "name": "beacon-sender",
+  "version": "0.0.1",
+  "description": "Send beacon made simple. Send XHR, performance and business metrics!",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/candreoliveira/beacon-sender.git"
+  },
+  "keywords": [
+    "beacon",
+    "dispatcher",
+    "sender",
+    "javascript",
+    "simple",
+    "xhr",
+    "performance",
+    "metric"
+  ],
+  "author": "@candreoliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/candreoliveira/beacon-sender/issues"
+  },
+  "homepage": "https://github.com/candreoliveira/beacon-sender#readme",
+  "dependencies": {
+    "xhr-events": "0.0.10"
+  }
+}
