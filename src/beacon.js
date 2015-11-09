@@ -37,7 +37,7 @@ function start(method, endpoint, headers, interval) {
         const tempQueue = queue;
         queue = [];
         const data = JSON.stringify(tempQueue);
-        send(data, method, endpoint, headers);
+        track(data, method, endpoint, headers);
       }
     }, interval);
   }
