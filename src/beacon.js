@@ -1,3 +1,10 @@
+const config = {
+  listen,
+  listenAll,
+  queue,
+  track,
+  start
+};
 let queue = [];
 
 function listen(element, event, cb) {
@@ -17,7 +24,7 @@ function queue(topic, data) {
   });
 }
 
-function track(data, method, endpoint, headers) {
+function track(data, method, endpoint, headers=[]) {
   if (typeof XMLHttpRequest !== 'undefined') {
     let xhr = new XMLHttpRequest();
     xhr.open(method, endpoint);
@@ -36,17 +43,12 @@ function start(method, endpoint, headers, interval) {
       if (queue.length > 0) {
         const tempQueue = queue;
         queue = [];
-        const data = JSON.stringify(tempQueue);
-        track(data, method, endpoint, headers);
+        const obj = JSON.stringify(tempQueue);
+        track(obj['data'], obj['method'], obj['endpoint'], obj['headers']);
       }
     }, interval);
   }
 }
 
-module.exports = {
-  listen,
-  listenAll,
-  queue,
-  send,
-  start
-};
+module.exports = config;
+window.BeaconSender = config;
