@@ -1,31 +1,19 @@
+let eventsQueue = [];
 const config = {
-  listen,
-  listenAll,
-  queue,
-  track,
+  queue: queue,
+  send,
   start
 };
-let queue = [];
-
-function listen(element, event, cb) {
-  element.addEventListener(event, cb);
-}
-
-function listenAll(elements, events, cbs) {
-  events.map(function(event, index) {
-    listen(element[index], event, cbs[index]);
-  });
-}
 
 function queue(topic, data) {
-  queue.push({
+  eventsQueue.push({
     topic,
     data
   });
 }
 
-function track(data, method, endpoint, headers=[]) {
-  if (typeof XMLHttpRequest !== 'undefined') {
+function send(data, method, endpoint, headers=[]) {
+  if (typeof XMLHttpRequest !== 'undefined' && 'data' in data && 'topic' in data) {
     let xhr = new XMLHttpRequest();
     xhr.open(method, endpoint);
     headers.map(function(h) {
@@ -33,18 +21,19 @@ function track(data, method, endpoint, headers=[]) {
         xhr.setRequestHeader(h[0], h[1]);
       }
     });
-    xhr.send(data);
+    xhr.send(JSON.stringify(data));
   }
 }
 
 function start(method, endpoint, headers, interval) {
   if (typeof window !== 'undefined' && typeof XMLHttpRequest !== 'undefined') {
     window.setInterval(function() {
-      if (queue.length > 0) {
-        const tempQueue = queue;
-        queue = [];
-        const obj = JSON.stringify(tempQueue);
-        track(obj['data'], obj['method'], obj['endpoint'], obj['headers']);
+      if (eventsQueue && eventsQueue.length > 0) {
+        const tempQueue = eventsQueue;
+        eventsQueue = [];
+        tempQueue.map(function(element) {
+          send(element, method, endpoint, headers);
+        });        
       }
     }, interval);
   }
