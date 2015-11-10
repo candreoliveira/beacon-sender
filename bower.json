@@ -1,0 +1,30 @@
+{
+  "name": "beacon-sender",
+  "description": "Send beacon made simple. Send XHR, performance and business metrics!",
+  "main": "src/main.js",
+  "authors": [
+    "@candreoliveira"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "beacon",
+    "dispatcher",
+    "sender",
+    "javascript",
+    "simple",
+    "xhr",
+    "performance",
+    "metric"
+  ],
+  "homepage": "https://github.com/candreoliveira/beacon-sender",
+  "moduleType": [
+    "es6"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
