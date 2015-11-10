@@ -1,6 +1,6 @@
 {
   "name": "beacon-sender",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Send beacon made simple. Send XHR, performance and business metrics!",
   "main": "index.js",
   "scripts": {
