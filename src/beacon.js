@@ -47,7 +47,7 @@ export default class BeaconSender {
     const self = this;
     if (typeof window !== 'undefined') {
       return window.setInterval(function() {
-        sendAll(method, endpoint, headers);
+        self.sendAll(method, endpoint, headers);
       }, interval);
     }
   }
