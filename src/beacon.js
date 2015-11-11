@@ -3,15 +3,26 @@ export default class BeaconSender {
     this.eventsQueue = eventsQueue;
   }
 
-  queue(topic, data) {
-    this.eventsQueue.push({
-      topic,
-      data
-    });
+  queue(data) {
+    if ((data instanceof Object) && ('data' in data && 'topic' in data)) {
+      this.eventsQueue.push({
+        topic: data['topic'],
+        data: data['data']
+      });
+    }
+  }
+
+  queueBatch(data) {
+    const self = this;
+    if ((data instanceof Array) && (data.length > 0)) {
+      data.map(function(element) {
+        self.queue(element);
+      });
+    }
   }
 
   send(data, method, endpoint, headers=[]) {
-    if (typeof XMLHttpRequest !== 'undefined' && 'data' in data && 'topic' in data) {
+    if (typeof XMLHttpRequest !== 'undefined' && data) {
       let xhr = new XMLHttpRequest();
       xhr.open(method, endpoint);
       headers.map(function(h) {
@@ -25,15 +36,13 @@ export default class BeaconSender {
   }
 
   start(method, endpoint, headers, interval) {
+    const self = this;
     if (typeof window !== 'undefined' && typeof XMLHttpRequest !== 'undefined') {
-      const self = this;
       window.setInterval(function() {
         if (self.eventsQueue && self.eventsQueue.length > 0) {
           const tempQueue = self.eventsQueue;
           self.eventsQueue = [];
-          tempQueue.map(function(element) {
-            self.send(element, method, endpoint, headers);
-          });
+          self.send(tempQueue, method, endpoint, headers);
         }
       }, interval);
     }
