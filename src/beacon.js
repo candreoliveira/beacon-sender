@@ -35,15 +35,19 @@ export default class BeaconSender {
     }
   }
 
+  sendAll(method, endpoint, headers) {
+    if (this.eventsQueue && this.eventsQueue.length > 0) {
+      const tempQueue = this.eventsQueue;
+      this.eventsQueue = [];
+      this.send(tempQueue, method, endpoint, headers);
+    }
+  }
+
   start(method, endpoint, headers, interval) {
     const self = this;
-    if (typeof window !== 'undefined' && typeof XMLHttpRequest !== 'undefined') {
-      window.setInterval(function() {
-        if (self.eventsQueue && self.eventsQueue.length > 0) {
-          const tempQueue = self.eventsQueue;
-          self.eventsQueue = [];
-          self.send(tempQueue, method, endpoint, headers);
-        }
+    if (typeof window !== 'undefined') {
+      return window.setInterval(function() {
+        sendAll(method, endpoint, headers);
       }, interval);
     }
   }
