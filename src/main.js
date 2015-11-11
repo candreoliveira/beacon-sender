@@ -1,7 +1,7 @@
 import BeaconSender from './beacon';
 
 if (typeof window !== 'undefined' && typeof XMLHttpRequest !== 'undefined') {
-  window.BeaconSender = BeaconSender;
+  window.BeaconSender = new BeaconSender();
 }
 
-module.exports = BeaconSender;
+module.exports = new BeaconSender();
